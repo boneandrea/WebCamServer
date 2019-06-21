@@ -2,3 +2,11 @@
 
 # BASIC認証
 echo "hoge:$(openssl passwd -apr1 your_password)" | sudo tee -a /etc/nginx/.htpasswd
+
+# systemdから自動起動
+systemd/user に書いても認識しない....
+
+sudo vi /etc/systemd/system/cam.service
+sudo systemctl list-unit-files --type=service |grep cam
+sudo systemctl enable cam.service
+sudo systemctl start cam 
