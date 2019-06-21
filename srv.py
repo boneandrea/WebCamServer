@@ -1,13 +1,7 @@
 # -*- coding: utf-8
 
-import sys
 import flask
-import base64
 import cv2
-import time
-import tempfile
-import signal
-import datetime
 
 from flask import Flask, request
 
@@ -27,6 +21,10 @@ def hello_world():
 @app.route('/shot')
 def my_shot():
   c=init_cam()
+  if not c.isOpened():
+    print ("cam is not open");
+    return "Camera initialization failed"
+
   print ("start to capture")
   r, img = c.read()
   print ("shot")
