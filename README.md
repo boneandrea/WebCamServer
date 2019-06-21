@@ -22,18 +22,6 @@ pip3 install opencv-python # 見つからない
 解決はすげえ手間がかかるらしい。全部コンパイル？
 virtualenvでpipでポイポイとは行かない。
 
-### できた：
-こうやればaptで入れた*.soも認識する。
-
-
-```
-virtualenv --system-site-packages -p python myserver
-```
-
-ただ、pyenvは動くのでなんとかsudoに頼らず独立ぽくできるか...
-
-
-
 ```
 python3
 >> import cv2

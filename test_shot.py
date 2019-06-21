@@ -1,12 +1,7 @@
 # -*- coding: utf-8
 
 import sys
-import flask
-import base64
 import cv2
-import time
-import tempfile
-import datetime
 
 c = cv2.VideoCapture(0)
 
@@ -22,14 +17,15 @@ print "shot"
 
 
 if r:
-    # 保存
+  # 保存
   cv2.imwrite("abc.jpg", img)
-  c.release()
-  sys.exit(0)
+  ret=0
 else:
   print "fail"
-  c.release()
-  sys.exit(1)
+  ret=1
+
+c.release()
+sys.exit(ret)
 
 #      base64 = encodeToBase64(filename)
 #      print (base64)
