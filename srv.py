@@ -1,9 +1,8 @@
 # -*- coding: utf-8
 
-import flask
+from flask import Flask, request, render_template
 import cv2
 
-from flask import Flask, request
 
 def init_cam():
   c = cv2.VideoCapture(0)
@@ -16,14 +15,14 @@ def init_cam():
 app = Flask(__name__)
 @app.route('/')
 def hello_world():
-  return "Hello World!"
+  return render_template('index.html',title='Home')
 
 @app.route('/shot')
 def my_shot():
   c=init_cam()
   if not c.isOpened():
     print ("cam is not open");
-    return "Camera initialization failed"
+    return render_template('index.html', message="cam is not open"), 503
 
   print ("start to capture")
   r, img = c.read()
@@ -31,12 +30,15 @@ def my_shot():
 
   if r:
      # 保存
-    cv2.imwrite("abc.jpg", img)
+    cv2.imwrite("img/abc.jpg", img)
+    code=200
+    message=""
   else:
-    print ("fail")
+    message="fail"
+    code=503
 
   c.release()
-  return "Hello World!"
+  return render_template('index.html', message=message), code
 
 #      base64 = encodeToBase64(filename)
 #      print (base64)
