@@ -1,14 +1,20 @@
 # -*- coding: utf-8
 
 from flask import Flask, request, render_template
+from dotenv import load_dotenv
 import cv2
+import os
+
+load_dotenv()
+width = float(os.environ["IMAGE_WIDTH"])
+height = float(os.environ["IMAGE_HEIGHT"])
 
 
 def init_cam():
     c = cv2.VideoCapture(0)
 # サイズを指定しないと"select timeout"した
-    c.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, 1200)
-    c.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, 800)
+    c.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, width)
+    c.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, height)
     print(c)
     return c
 
