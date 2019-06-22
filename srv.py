@@ -3,11 +3,16 @@
 from flask import Flask, request, render_template
 from dotenv import load_dotenv
 import cv2
+import uuid
 import os
+import s3
 
 load_dotenv()
 width = float(os.environ["IMAGE_WIDTH"])
 height = float(os.environ["IMAGE_HEIGHT"])
+
+TEMPFILE = "img/abc.jpg"
+BUCKET = os.environ["BUCKET"]
 
 
 def init_cam():
@@ -38,15 +43,26 @@ def my_shot():
 
     if r:
        # 保存
-        cv2.imwrite("img/abc.jpg", img)
+        cv2.imwrite(TEMPFILE, img)
+
+        print("uploading....")
+        put_filename = create_put_filename()
+        s3.upload(TEMPFILE, BUCKET, put_filename)
+        print("uploaded")
+
         code = 200
         message = ""
     else:
-        message = "fail"
         code = 503
+        message = "fail"
 
     c.release()
     return render_template('index.html', message=message), code
+
+
+def create_put_filename():
+    suffix = ".jpg"
+    return "%s/%s%s" % (os.environ["BUCKET_PATH"], str(uuid.uuid4()), suffix)
 
 
 #      base64 = encodeToBase64(filename)
