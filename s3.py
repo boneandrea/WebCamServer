@@ -16,7 +16,15 @@ def upload(original_img, bucket, img):
     s3 = boto3.resource('s3',
                         region_name='ap-northeast-1')
 
-    ret = s3.meta.client.upload_file(original_img, bucket, img)
+    ret = s3.meta.client.upload_file(
+        Filename=original_img,
+        Bucket=bucket,
+        Key=img,
+        ExtraArgs={
+            'ContentType': 'image/jpeg',
+            'ACL': "public-read",
+        })
+
     print("uploaded")
     return ret
 
@@ -25,10 +33,9 @@ if __name__ == '__main__':
     s3 = init_s3()
 
     s3.list_buckets()
-    obj = s3.get_object(Bucket='knuckle-images', Key='abc.txt')
+    # obj = s3.get_object(Bucket='knuckle-images', Key='abc.txt')
     # bucket = s3.Bucket('knuckle-images')
     # obj = bucket.Object('abc.txt').get()
-
-    print(obj['Body'].read().decode("utf-8"))
+    # print(obj['Body'].read().decode("utf-8"))
 
     upload("hello.txt", 'knuckle-images', 'images/hello5.txt')

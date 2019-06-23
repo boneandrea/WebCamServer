@@ -37,3 +37,8 @@ sudo apt-get install libopencv-dev
 python test_shot.py
 ```
 動いた
+
+
+upload時はContent-typeを指定する
+
+
