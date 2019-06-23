@@ -1,6 +1,6 @@
 # -*- coding: utf-8
 
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 from dotenv import load_dotenv
 import cv2
 import uuid
@@ -45,19 +45,16 @@ def my_shot():
        # 保存
         cv2.imwrite(TEMPFILE, img)
 
-        print("uploading....")
         put_filename = create_put_filename()
         s3.upload(TEMPFILE, BUCKET, put_filename)
-        print("uploaded")
 
-        code = 200
-        message = ""
+        success = True
     else:
-        code = 503
-        message = "fail"
+        put_filename = None
+        success = False
 
     c.release()
-    return render_template('index.html', message=message), code
+    return jsonify({"success": success, "filename": put_filename})
 
 
 def create_put_filename():

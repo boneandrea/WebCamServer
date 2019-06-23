@@ -12,10 +12,13 @@ def init_s3():
 
 
 def upload(original_img, bucket, img):
+    print("uploading....")
     s3 = boto3.resource('s3',
                         region_name='ap-northeast-1')
 
-    return s3.meta.client.upload_file(original_img, bucket, img)
+    ret = s3.meta.client.upload_file(original_img, bucket, img)
+    print("uploaded")
+    return ret
 
 
 if __name__ == '__main__':
