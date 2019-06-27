@@ -3,13 +3,16 @@
 from flask import Flask, request, render_template, jsonify
 from dotenv import load_dotenv
 import cv2
+import time
 import uuid
 import os
 import s3
 
+
 load_dotenv()
 width = float(os.environ["IMAGE_WIDTH"])
 height = float(os.environ["IMAGE_HEIGHT"])
+CAMERA_RELEASE_WAIT = int(os.environ["CAMERA_RELEASE_WAIT"])
 
 TEMPFILE = "img/abc.jpg"
 BUCKET = os.environ["BUCKET"]
@@ -53,8 +56,13 @@ def my_shot():
         put_filename = None
         success = False
 
-    c.release()
+    release_camera(c)
     return jsonify({"success": success, "filename": put_filename})
+
+
+def release_camera(c):
+    c.release()
+    time.sleep(CAMERA_RELEASE_WAIT)
 
 
 def create_put_filename():
