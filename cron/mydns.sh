@@ -5,10 +5,11 @@
 DIR=$(dirname $(readlink -f $0))
 cd $DIR
 
-MAILTO=bone.andrea.anthrax@gmail.com
+#MAILTO= # moved to .env
 
 . ./.env
 
+# TODO: if fail ( not 200 ) ??
 wget -O - https://$ID:$PASS@ipv4.mydns.jp/login.html
 
 exit
