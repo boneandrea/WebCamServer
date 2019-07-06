@@ -1,0 +1,14 @@
+[Unit]
+Description=Camera Service
+After=network.target local-fs.target
+
+[Service]
+ExecStart= /home/pi/work/run.sh
+Restart = always
+Type = simple
+User=pi
+Group=pi
+
+[Install]
+WantedBy = multi-user.target
+
