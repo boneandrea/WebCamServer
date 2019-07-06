@@ -1,0 +1,17 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "iam:CreateAccessKey",
+                "iam:DeleteAccessKey",
+                "iam:ListAccessKeys",
+                "iam:UpdateAccessKey"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "_USERID_" // arn:aws:iam::NNNNNNNNNNNN:user/user_name
+           ]
+        }
+    ]
+}
