@@ -1,12 +1,63 @@
-#virtualenv --system-site-packages -p python myserver
+# zshは趣味で
+apt install zsh
+git clone dotfiles
+TRAMPがひっかかるかもしれない？
 
-# BASIC認証
-echo "hoge:$(openssl passwd -apr1 your_password)" | sudo tee -a /etc/nginx/.htpasswd
+# カメラテストツールのインストール
+sudo apt install fswebcam -y
 
-# systemdから自動起動
+# 肝心のCV2が入らない
+pip install opencv-python # => Err. give up
+
+# パッケージでシステムに入れる
+sudo apt-get install python-opencv -y
+
+# Python環境独立
+sudo apt install virtualenv
+virtualenv --system-site-packages v2 # システムパッケージを有効にする
+
+. v2/bin/activate v2
+python test_shot.py # OK
+
+# Python
+足りないものがある
+pip install -r requirements.txt
+pip install flask
+pip install python-dotenv
+
+
+# システム設定
+
+## systemdから自動起動する
+
 systemd/user に書いても認識しない....
 
+ls etc/systemd
 sudo vi /etc/systemd/system/cam.service
 sudo systemctl list-unit-files --type=service |grep cam
 sudo systemctl enable cam.service
-sudo systemctl start cam 
+sudo systemctl start cam
+
+
+## Set WWW
+
+ls /etc
+cat /etc/nginx/.htpasswd
+sudo apt install nginx -y
+echo "tahseeXox9Hudahmiequii5iuqu6eavo:$(openssl passwd -apr1 xuubohngooni5ahke7teibieti8aingohy4aeh0saigioRahjohsho7nae3Fuhoo)" | sudo tee -a /etc/nginx/.htpasswd
+cat /etc/nginx/.htpasswd
+
+
+### BASIC認証
+cat etc/nginx/
+
+### nginx BASIC認証設定
+
+
+## Set crontab to keep IP address using MyDNS
+ls cron
+
+## certbot
+sudo setup_certbot.sh
+certbot
+let's encrypt

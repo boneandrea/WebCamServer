@@ -42,3 +42,6 @@ python test_shot.py
 upload時はContent-typeを指定する
 
 
+# set crontab
+To keep global IP address by MyDNS.
+

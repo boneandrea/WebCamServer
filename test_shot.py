@@ -22,7 +22,7 @@ print "shot"
 
 if r:
   # 保存
-  cv2.imwrite("img/abc.jpg", img)
+  cv2.imwrite("abc.jpg", img)
   ret=0
 else:
   print "fail"
