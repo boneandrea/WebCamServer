@@ -7,9 +7,9 @@ cd $DIR
 
 #MAILTO= # moved to .env
 
-. ./.env
+. ./.env || exit 1
 
 # TODO: if fail ( not 200 ) ??
 wget -O - https://$ID:$PASS@ipv4.mydns.jp/login.html
 
-exit
+exit 0
