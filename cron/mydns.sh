@@ -3,6 +3,12 @@
 ## Script to notify ip address to MyDNS
 
 TMP=$(mktemp)
+atexit() {
+  [[ -n ${TMP-} ]] && rm -f "$TMP"
+}
+
+trap atexit EXIT
+trap 'rc=$?; trap - EXIT; atexit; exit $?' INT PIPE TERM
 
 DIR=$(dirname $(readlink -f $0))
 cd $DIR
@@ -22,6 +28,5 @@ else
 	#echo | mail -s "mydns update failed" $MAILTO
 	EXIT=1
 fi
-
 
 exit $EXIT
