@@ -1,0 +1,15 @@
+[Unit]
+Description=config AWS security group ruleset
+After=network-online.target
+
+[Service]
+User=pi
+Type=oneshot
+# Type=simpleでは、コマンドを実行したタイミングで起動完了となります。oneshotだと、指定したコマンドが完了したタイミングで起動完了・サービス終了と判断します。
+
+RemainAfterExit=no
+ExecStart=/home/pi/work/cron/mydns.sh
+
+[Install]
+WantedBy=network-online.target
+
